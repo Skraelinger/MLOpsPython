@@ -1,7 +1,7 @@
 import lightgbm
 import numpy as np
 import pandas as pd
-from safedriver.training.train import split_data, train_model, get_model_metrics
+from train import split_data, train_model, get_model_metrics
 
 
 def test_split_data():
