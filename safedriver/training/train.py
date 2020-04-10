@@ -26,58 +26,79 @@ POSSIBILITY OF SUCH DAMAGE.
 
 import os
 import pandas as pd
-from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
+import lightgbm
 
 
-# Split the dataframe into test and train data
-def split_data(df):
-    X = df.drop('Y', axis=1).values
-    y = df['Y'].values
+def split_data(data_df):
+    """Split a dataframe into training and validation datasets"""
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=0)
-    data = {"train": {"X": X_train, "y": y_train},
-            "test": {"X": X_test, "y": y_test}}
-    return data
+    features = data_df.drop(['target', 'id'], axis=1)
+    labels = np.array(data_df['target'])
+    (features_train, features_valid, labels_train, labels_valid) = train_test_split(features,
+                                                                                    labels,
+                                                                                    test_size=0.2,
+                                                                                    random_state=0)
 
+    train_data = lightgbm.Dataset(features_train, label=labels_train)
+    valid_data = lightgbm.Dataset(features_valid, label=labels_valid, free_raw_data=False)
 
-# Train the model, return the model
-def train_model(data, ridge_args):
-    reg_model = Ridge(**ridge_args)
-    reg_model.fit(data["train"]["X"], data["train"]["y"])
-    return reg_model
+    return (train_data, valid_data)
 
 
-# Evaluate the metrics for the model
+def train_model(data, parameters):
+    """Train a model with the given datasets and parameters"""
+    # The data returned in split_data is an array.
+    # Access train_data with data[0] and valid_data with data[1]
+
+    model = lightgbm.train(parameters,
+                           data[0],
+                           valid_sets=data[1],
+                           num_boost_round=500,
+                           early_stopping_rounds=20)
+
+    return model
+
+
 def get_model_metrics(model, data):
-    preds = model.predict(data["test"]["X"])
-    mse = mean_squared_error(preds, data["test"]["y"])
-    metrics = {"mse": mse}
-    return metrics
+    """Construct a dictionary of metrics for the model"""
+
+    predictions = model.predict(data[1].data)
+    fpr, tpr, thresholds = metrics.roc_curve(data[1].label, predictions)
+    model_metrics = {"auc": (metrics.auc(fpr, tpr))}
+
+    return model_metrics
 
 
 def main():
-    print("Running train.py")
+    """This method invokes the training functions for development purposes"""
 
-    # Define training parameters
-    ridge_args = {"alpha": 0.5}
+    # Read data from a file
+    data_df = pd.read_csv('porto_seguro_safe_driver_prediction_train.csv')
 
-    # Load the training data as dataframe
-    data_dir = "data"
-    data_file = os.path.join(data_dir, 'diabetes.csv')
-    train_df = pd.read_csv(data_file)
+    # Hard code the parameters for training the model
+    parameters = {
+        'learning_rate': 0.02,
+        'boosting_type': 'gbdt',
+        'objective': 'binary',
+        'metric': 'auc',
+        'sub_feature': 0.7,
+        'num_leaves': 60,
+        'min_data': 100,
+        'min_hessian': 1,
+        'verbose': 0
+    }
 
-    data = split_data(train_df)
+    # Call the functions defined in this file
 
-    # Train the model
-    model = train_model(data, ridge_args)
-
-    # Log the metrics for the model
+    data = split_data(data_df)
+    model = train_model(data, parameters)
     metrics = get_model_metrics(model, data)
-    for (k, v) in metrics.items():
-        print(f"{k}: {v}")
+
+    # Print the resulting metrics for the model
+
+    print(metrics)
 
 
 if __name__ == '__main__':
