@@ -60,7 +60,13 @@ output_sample = numpy.array([
 # at http://<scoring_base_url>/swagger.json
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
+
+
 def run(data, request_headers):
+#def run(raw_data, request_headers):
+    #data = json.loads(raw_data)["data"]
+    #data = np.array(data)
+    
     result = model.predict(data)
 
     # Demonstrate how we can log custom data into the Application Insights
@@ -85,6 +91,6 @@ def run(data, request_headers):
 if __name__ == "__main__":
     # Test scoring
     init()
-    test_row = '{"data":[[1,2,3,4,5,6,7,8,9,10],[10,9,8,7,6,5,4,3,2,1]]}'
-    prediction = run(test_row, {})
-    print("Test result: ", prediction)
+    TEST_ROW = '{"data":[[0,1,8,1,0,0,1,0,0,0,0,0,0,0,12,1,0,0,0.5,0.3,0.610327781,7,1,-1,0,-1,1,1,1,2,1,65,1,0.316227766,0.669556409,0.352136337,3.464101615,0.1,0.8,0.6,1,1,6,3,6,2,9,1,1,1,12,0,1,1,0,0,1],[4,2,5,1,0,0,0,0,1,0,0,0,0,0,5,1,0,0,0.9,0.5,0.771362431,4,1,-1,0,0,11,1,1,0,1,103,1,0.316227766,0.60632002,0.358329457,2.828427125,0.4,0.5,0.4,3,3,8,4,10,2,7,2,0,3,10,0,0,1,1,0,1]]}'  # NOQA: E501
+    PREDICTION = run(TEST_ROW, {})
+    print("Test result: ", PREDICTION)
