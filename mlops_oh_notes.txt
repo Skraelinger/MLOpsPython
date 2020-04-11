@@ -1,0 +1,11 @@
+azureml-logs/20_image_build_log.txt
+
+conda_dependencies file requires deprecated azure meta-package
+https://github.com/Azure/azure-sdk-for-python/issues/10646
+
+replaced with:
+- azure-mgmt-compute
+- azure-mgmt-storage
+- azure-mgmt-resource
+- azure-keyvault-secrets
+- azure-storage-blob (already included)
