@@ -32,6 +32,9 @@ Collecting azure
      command: /azureml-envs/azureml_314fca60f1726b525836e454af8c229a/bin/python -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-qwvztkeg/azure/setup.py'"'"'; __file__='"'"'/tmp/pip-install-qwvztkeg/azure/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' egg_info --egg-base /tmp/pip-install-qwvztkeg/azure/pip-egg-info
          cwd: /tmp/pip-install-qwvztkeg/azure/
 
+Somewhere along the way, the CI stopped getting triggered on changes to master!  Not.  See "CI Triggers" here:
+https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml
+Relevant file in our project is: safedriver-ci.yml, where we declare which project files/directories will trigger the pipeline if/when they're changed.
 
 Deleted train_cluster and reran DevOps pipeline.  Run 9_10.  This time "azure" package is gone and it seems we got past the env setup stage of the Train Model step.
 Cancelled the run after waiting 20+ minutes.  Log indicates success with one error in the middle:
