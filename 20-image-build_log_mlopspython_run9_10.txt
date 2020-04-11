@@ -1,0 +1,702 @@
+2020/04/11 12:20:25 Downloading source code...
+2020/04/11 12:20:26 Finished downloading source code
+2020/04/11 12:20:27 Creating Docker network: acb_default_network, driver: 'bridge'
+2020/04/11 12:20:27 Successfully set up Docker network: acb_default_network
+2020/04/11 12:20:27 Setting up Docker configuration...
+2020/04/11 12:20:28 Successfully set up Docker configuration
+2020/04/11 12:20:28 Logging in to registry: mlopsopenhac4b2787af.azurecr.io
+2020/04/11 12:20:30 Successfully logged into mlopsopenhac4b2787af.azurecr.io
+2020/04/11 12:20:30 Executing step ID: acb_step_0. Timeout(sec): 5400, Working directory: '', Network: 'acb_default_network'
+2020/04/11 12:20:30 Scanning for dependencies...
+2020/04/11 12:20:30 Successfully scanned dependencies
+2020/04/11 12:20:30 Launching container with name: acb_step_0
+Sending build context to Docker daemon  60.93kB
+
+Step 1/15 : FROM mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04@sha256:a1b514f3ba884b9a7695cbba5638933ddaf222e8ce3e8c81e8cdf861679abb05
+sha256:a1b514f3ba884b9a7695cbba5638933ddaf222e8ce3e8c81e8cdf861679abb05: Pulling from azureml/base
+Digest: sha256:a1b514f3ba884b9a7695cbba5638933ddaf222e8ce3e8c81e8cdf861679abb05
+Status: Downloaded newer image for mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04@sha256:a1b514f3ba884b9a7695cbba5638933ddaf222e8ce3e8c81e8cdf861679abb05
+ ---> 93a72e6bd1ce
+Step 2/15 : USER root
+ ---> Running in adb4e666916c
+Removing intermediate container adb4e666916c
+ ---> 77dd0cd56787
+Step 3/15 : RUN mkdir -p $HOME/.cache
+ ---> Running in 9c5a65a76383
+Removing intermediate container 9c5a65a76383
+ ---> ae124d198f60
+Step 4/15 : WORKDIR /
+ ---> Running in 92aff79e5958
+Removing intermediate container 92aff79e5958
+ ---> 495ed8013782
+Step 5/15 : COPY azureml-environment-setup/99brokenproxy /etc/apt/apt.conf.d/
+ ---> fddd55e77351
+Step 6/15 : RUN if dpkg --compare-versions `conda --version | grep -oE '[^ ]+$'` lt 4.4.11; then conda install conda==4.4.11; fi
+ ---> Running in 68e9c1845cb6
+Removing intermediate container 68e9c1845cb6
+ ---> f6977d4a3379
+Step 7/15 : COPY azureml-environment-setup/mutated_conda_dependencies.yml azureml-environment-setup/mutated_conda_dependencies.yml
+ ---> f6c883a55993
+Step 8/15 : RUN ldconfig /usr/local/cuda/lib64/stubs && conda env create -p /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636 -f azureml-environment-setup/mutated_conda_dependencies.yml && rm -rf "$HOME/.cache/pip" && conda clean -aqy && CONDA_ROOT_DIR=$(conda info --root) && rm -rf "$CONDA_ROOT_DIR/pkgs" && find "$CONDA_ROOT_DIR" -type d -name __pycache__ -exec rm -rf {} + && ldconfig
+ ---> Running in 53e1cdde2f4c
+Solving environment: ...working... done
+[91m
+
+==> WARNING: A newer version of conda exists. <==
+  current version: 4.5.11
+  latest version: 4.8.3
+
+Please update conda by running
+
+    $ conda update -n base -c defaults conda
+
+
+
+libgfortran-ng-7.3.0 | 1.3 MB    |            |   0% [0m[91m
+libgfortran-ng-7.3.0 | 1.3 MB    | ########1  |  82% [0m[91m
+libgfortran-ng-7.3.0 | 1.3 MB    | ########## | 100% [0m[91m
+
+openssl-1.1.1f       | 3.8 MB    |            |   0% [0m[91m
+openssl-1.1.1f       | 3.8 MB    | #######7   |  77% [0m[91m
+openssl-1.1.1f       | 3.8 MB    | #########7 |  97% [0m[91m
+openssl-1.1.1f       | 3.8 MB    | ########## | 100% [0m[91m
+
+mkl_fft-1.0.15       | 172 KB    |            |   0% [0m[91m
+mkl_fft-1.0.15       | 172 KB    | ########## | 100% [0m[91m
+
+mkl_random-1.1.0     | 376 KB    |            |   0% [0m[91m
+mkl_random-1.1.0     | 376 KB    | ########## | 100% [0m[91m
+
+_libgcc_mutex-0.1    | 3 KB      |            |   0% [0m[91m
+_libgcc_mutex-0.1    | 3 KB      | ########## | 100% [0m[91m
+
+ca-certificates-2020 | 132 KB    |            |   0% [0m[91m
+ca-certificates-2020 | 132 KB    | ########## | 100% [0m[91m
+
+setuptools-46.1.3    | 656 KB    |            |   0% [0m[91m
+setuptools-46.1.3    | 656 KB    | ########9  |  90% [0m[91m
+setuptools-46.1.3    | 656 KB    | ########## | 100% [0m[91m
+
+ncurses-6.2          | 1.1 MB    |            |   0% [0m[91m
+ncurses-6.2          | 1.1 MB    | ########   |  81% [0m[91m
+ncurses-6.2          | 1.1 MB    | ########## | 100% [0m[91m
+
+python-3.7.5         | 36.7 MB   |            |   0% [0m[91m
+python-3.7.5         | 36.7 MB   | #1         |  11% [0m[91m
+python-3.7.5         | 36.7 MB   | ##4        |  25% [0m[91m
+python-3.7.5         | 36.7 MB   | ####       |  41% [0m[91m
+python-3.7.5         | 36.7 MB   | #####4     |  54% [0m[91m
+python-3.7.5         | 36.7 MB   | ######7    |  67% [0m[91m
+python-3.7.5         | 36.7 MB   | #######8   |  79% [0m[91m
+python-3.7.5         | 36.7 MB   | ########6  |  87% [0m[91m
+python-3.7.5         | 36.7 MB   | #########3 |  93% [0m[91m
+python-3.7.5         | 36.7 MB   | #########7 |  97% [0m[91m
+python-3.7.5         | 36.7 MB   | ########## | 100% [0m[91m
+
+readline-7.0         | 392 KB    |            |   0% [0m[91m
+readline-7.0         | 392 KB    | ########## | 100% [0m[91m
+
+wheel-0.34.2         | 49 KB     |            |   0% [0m[91m
+wheel-0.34.2         | 49 KB     | ########## | 100% [0m[91m
+
+joblib-0.14.1        | 202 KB    |            |   0% [0m[91m
+joblib-0.14.1        | 202 KB    | ########## | 100% [0m[91m
+
+six-1.14.0           | 27 KB     |            |   0% [0m[91m
+six-1.14.0           | 27 KB     | ########## | 100% [0m[91m
+
+libstdcxx-ng-9.1.0   | 4.0 MB    |            |   0% [0m[91m
+libstdcxx-ng-9.1.0   | 4.0 MB    | #######5   |  76% [0m[91m
+libstdcxx-ng-9.1.0   | 4.0 MB    | #########8 |  99% [0m[91m
+libstdcxx-ng-9.1.0   | 4.0 MB    | ########## | 100% [0m[91m
+
+certifi-2020.4.5.1   | 159 KB    |            |   0% [0m[91m
+certifi-2020.4.5.1   | 159 KB    | ########## | 100% [0m[91m
+
+scikit-learn-0.22.1  | 7.1 MB    |            |   0% [0m[91m
+scikit-learn-0.22.1  | 7.1 MB    | ######9    |  69% [0m[91m
+scikit-learn-0.22.1  | 7.1 MB    | #########  |  90% [0m[91m
+scikit-learn-0.22.1  | 7.1 MB    | ########## | 100% [0m[91m
+
+blas-1.0             | 6 KB      |            |   0% [0m[91m
+blas-1.0             | 6 KB      | ########## | 100% [0m[91m
+
+pip-20.0.2           | 1.9 MB    |            |   0% [0m[91m
+pip-20.0.2           | 1.9 MB    | ########1  |  81% [0m[91m
+pip-20.0.2           | 1.9 MB    | ########## | 100% [0m[91m
+
+mkl-2020.0           | 202.1 MB  |            |   0% [0m[91m
+mkl-2020.0           | 202.1 MB  | 3          |   3% [0m[91m
+mkl-2020.0           | 202.1 MB  | 7          |   7% [0m[91m
+mkl-2020.0           | 202.1 MB  | #1         |  12% [0m[91m
+mkl-2020.0           | 202.1 MB  | #6         |  16% [0m[91m
+mkl-2020.0           | 202.1 MB  | #9         |  20% [0m[91m
+mkl-2020.0           | 202.1 MB  | ##3        |  24% [0m[91m
+mkl-2020.0           | 202.1 MB  | ##7        |  28% [0m[91m
+mkl-2020.0           | 202.1 MB  | ###1       |  32% [0m[91m
+mkl-2020.0           | 202.1 MB  | ###5       |  36% [0m[91m
+mkl-2020.0           | 202.1 MB  | ###9       |  40% [0m[91m
+mkl-2020.0           | 202.1 MB  | ####4      |  44% [0m[91m
+mkl-2020.0           | 202.1 MB  | ####9      |  50% [0m[91m
+mkl-2020.0           | 202.1 MB  | #####4     |  54% [0m[91m
+mkl-2020.0           | 202.1 MB  | #####8     |  59% [0m[91m
+mkl-2020.0           | 202.1 MB  | ######3    |  63% [0m[91m
+mkl-2020.0           | 202.1 MB  | ######7    |  67% [0m[91m
+mkl-2020.0           | 202.1 MB  | #######1   |  72% [0m[91m
+mkl-2020.0           | 202.1 MB  | #######5   |  75% [0m[91m
+mkl-2020.0           | 202.1 MB  | #######8   |  78% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########   |  80% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########1  |  82% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########2  |  83% [0m
+[91m
+mkl-2020.0           | 202.1 MB  | ########3  |  84% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########4  |  84% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########4  |  84% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########4  |  85% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  85% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  85% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  85% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  85% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########5  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  86% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########6  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  87% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########7  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  88% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########8  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  89% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########9  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  90% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m
+[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########  |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  91% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########1 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  92% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########2 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  93% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########3 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  94% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########4 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  95% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########5 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  96% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########6 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  97% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########7 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m
+[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  98% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########8 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 |  99% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | #########9 | 100% [0m[91m
+mkl-2020.0           | 202.1 MB  | ########## | 100% [0m[91m
+
+numpy-base-1.18.1    | 5.2 MB    |            |   0% [0m[91m
+numpy-base-1.18.1    | 5.2 MB    | #######6   |  76% [0m[91m
+numpy-base-1.18.1    | 5.2 MB    | #########1 |  92% [0m[91m
+numpy-base-1.18.1    | 5.2 MB    | ########## | 100% [0m[91m
+
+sqlite-3.31.1        | 2.0 MB    |            |   0% [0m[91m
+sqlite-3.31.1        | 2.0 MB    | ########   |  81% [0m[91m
+sqlite-3.31.1        | 2.0 MB    | ########## | 100% [0m[91m
+
+intel-openmp-2020.0  | 916 KB    |            |   0% [0m[91m
+intel-openmp-2020.0  | 916 KB    | ########6  |  87% [0m[91m
+intel-openmp-2020.0  | 916 KB    | ########## | 100% [0m[91m
+
+psutil-5.6.7         | 329 KB    |            |   0% [0m[91m
+psutil-5.6.7         | 329 KB    | ########## | 100% [0m[91m
+
+tk-8.6.8             | 3.1 MB    |            |   0% [0m[91m
+tk-8.6.8             | 3.1 MB    | #######6   |  77% [0m[91m
+tk-8.6.8             | 3.1 MB    | #########  |  91% [0m[91m
+tk-8.6.8             | 3.1 MB    | ########## | 100% 
+
+numpy-1.18.1         | 5 KB      |            |   0% [0m[91m
+numpy-1.18.1         | 5 KB      | #######5   |  75% [0m[91m
+numpy-1.18.1         | 5 KB      | ########## | 100% [0m[91m
+
+libffi-3.2.1         | 43 KB     |            |   0% [0m[91m
+libffi-3.2.1         | 43 KB     | ########## | 100% [0m[91m
+
+xz-5.2.4             | 366 KB    |            |   0% [0m[91m
+xz-5.2.4             | 366 KB    | ########## | 100% [0m[91m
+
+scipy-1.4.1          | 18.9 MB   |            |   0% [0m[91m
+scipy-1.4.1          | 18.9 MB   | ##2        |  23% [0m[91m
+scipy-1.4.1          | 18.9 MB   | ####6      |  46% [0m[91m
+scipy-1.4.1          | 18.9 MB   | #######    |  71% [0m[91m
+scipy-1.4.1          | 18.9 MB   | ########6  |  86% [0m[91m
+scipy-1.4.1          | 18.9 MB   | #########7 |  98% [0m[91m
+scipy-1.4.1          | 18.9 MB   | ########## | 100% [0m[91m
+
+mkl-service-2.3.0    | 208 KB    |            |   0% [0m[91m
+mkl-service-2.3.0    | 208 KB    | ########## | 100% [0m[91m
+
+libedit-3.1.20181209 | 188 KB    |            |   0% [0m[91m
+libedit-3.1.20181209 | 188 KB    | ########## | 100% [0m[91m
+
+libgcc-ng-9.1.0      | 8.1 MB    |            |   0% [0m[91m
+libgcc-ng-9.1.0      | 8.1 MB    | #####7     |  57% [0m[91m
+libgcc-ng-9.1.0      | 8.1 MB    | #######6   |  77% [0m[91m
+libgcc-ng-9.1.0      | 8.1 MB    | #########4 |  94% [0m[91m
+libgcc-ng-9.1.0      | 8.1 MB    | ########## | 100% [0m[91m
+
+lightgbm-2.3.0       | 1.0 MB    |            |   0% [0m[91m
+lightgbm-2.3.0       | 1.0 MB    | #######2   |  73% [0m[91m
+lightgbm-2.3.0       | 1.0 MB    | #########4 |  94% [0m[91m
+lightgbm-2.3.0       | 1.0 MB    | ########## | 100% [0m[91m
+
+zlib-1.2.11          | 120 KB    |            |   0% [0m[91m
+zlib-1.2.11          | 120 KB    | ########## | 100% [0m
+Downloading and Extracting Packages
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+Collecting azureml-model-management-sdk==1.0.1b6.post1
+  Downloading azureml_model_management_sdk-1.0.1b6.post1-py2.py3-none-any.whl (130 kB)
+Collecting azureml-sdk==1.0.74
+  Downloading azureml_sdk-1.0.74-py3-none-any.whl (4.6 kB)
+Collecting scipy==1.3.1
+  Downloading scipy-1.3.1-cp37-cp37m-manylinux1_x86_64.whl (25.2 MB)
+Collecting scikit-learn==0.22
+  Downloading scikit_learn-0.22-cp37-cp37m-manylinux1_x86_64.whl (7.0 MB)
+Collecting pandas==0.25.3
+  Downloading pandas-0.25.3-cp37-cp37m-manylinux1_x86_64.whl (10.4 MB)
+Collecting numpy==1.17.3
+  Downloading numpy-1.17.3-cp37-cp37m-manylinux1_x86_64.whl (20.0 MB)
+Collecting joblib==0.14.0
+  Downloading joblib-0.14.0-py2.py3-none-any.whl (294 kB)
+Collecting gunicorn==19.9.0
+  Downloading gunicorn-19.9.0-py2.py3-none-any.whl (112 kB)
+Collecting flask==1.1.1
+  Downloading Flask-1.1.1-py2.py3-none-any.whl (94 kB)
+Collecting inference-schema[numpy-support]
+  Downloading inference_schema-1.0.2-py3-none-any.whl (19 kB)
+Collecting azure-mgmt-compute
+  Downloading azure_mgmt_compute-12.0.0-py2.py3-none-any.whl (1.6 MB)
+Collecting azure-mgmt-storage
+  Downloading azure_mgmt_storage-9.0.0-py2.py3-none-any.whl (525 kB)
+Collecting azure-mgmt-resource
+  Downloading azure_mgmt_resource-9.0.0-py2.py3-none-any.whl (807 kB)
+Collecting azure-keyvault-secrets
+  Downloading azure_keyvault_secrets-4.1.0-py2.py3-none-any.whl (157 kB)
+Collecting azure-storage-blob
+  Downloading azure_storage_blob-12.3.0-py2.py3-none-any.whl (279 kB)
+Collecting azureml-dataprep
+  Downloading azureml_dataprep-1.4.3-py3-none-any.whl (26.7 MB)
+Collecting liac-arff>=2.1.1
+  Downloading liac-arff-2.4.0.tar.gz (15 kB)
+Collecting dill>=0.2.7.1
+  Downloading dill-0.3.1.1.tar.gz (151 kB)
+Collecting pytz>=2017.2
+  Downloading pytz-2019.3-py2.py3-none-any.whl (509 kB)
+Collecting python-dateutil>=2.5.3
+  Downloading python_dateutil-2.8.1-py2.py3-none-any.whl (227 kB)
+Requirement already satisfied: six>=1.10 in /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636/lib/python3.7/site-packages (from azureml-model-management-sdk==1.0.1b6.post1->-r /azureml-environment-setup/condaenv.5n6hdqgg.requirements.txt (line 1)) (1.14.0)
+Collecting requests>=2.17.3
+  Downloading requests-2.23.0-py2.py3-none-any.whl (58 kB)
+Collecting adal>=0.4.5
+  Downloading adal-1.2.2-py2.py3-none-any.whl (53 kB)
+Collecting azureml-core==1.0.74.*
+  Downloading azureml_core-1.0.74-py2.py3-none-any.whl (1.2 MB)
+Collecting azureml-pipeline==1.0.74.*
+  Downloading azureml_pipeline-1.0.74-py3-none-any.whl (3.7 kB)
+Collecting azureml-train==1.0.74.*
+  Downloading azureml_train-1.0.74-py3-none-any.whl (3.2 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting click>=5.1
+  Downloading click-7.1.1-py2.py3-none-any.whl (82 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.1-py2.py3-none-any.whl (126 kB)
+Collecting wrapt==1.11.1
+  Downloading wrapt-1.11.1.tar.gz (27 kB)
+Collecting azure-common~=1.1
+  Downloading azure_common-1.1.25-py2.py3-none-any.whl (12 kB)
+Collecting msrestazure<2.0.0,>=0.4.32
+  Downloading msrestazure-0.6.3-py2.py3-none-any.whl (40 kB)
+Collecting msrest>=0.5.0
+  Downloading msrest-0.6.13-py2.py3-none-any.whl (83 kB)
+Collecting azure-core<2.0.0,>=1.2.1
+  Downloading azure_core-1.4.0-py2.py3-none-any.whl (114 kB)
+Collecting cryptography>=2.1.4
+  Downloading cryptography-2.9-cp35-abi3-manylinux2010_x86_64.whl (2.7 MB)
+Collecting dotnetcore2>=2.1.13
+  Downloading dotnetcore2-2.1.13-py3-none-manylinux1_x86_64.whl (29.3 MB)
+Collecting azureml-dataprep-native<15.0.0,>=14.1.0
+  Downloading azureml_dataprep_native-14.1.0-cp37-cp37m-manylinux1_x86_64.whl (1.3 MB)
+Collecting cloudpickle>=1.1.0
+  Downloading cloudpickle-1.3.0-py2.py3-none-any.whl (26 kB)
+Collecting azure-identity<1.3.0,>=1.2.0
+  Downloading azure_identity-1.2.0-py2.py3-none-any.whl (58 kB)
+Requirement already satisfied: certifi>=2017.4.17 in /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636/lib/python3.7/site-packages (from requests>=2.17.3->azureml-model-management-sdk==1.0.1b6.post1->-r /azureml-environment-setup/condaenv.5n6hdqgg.requirements.txt (line 1)) (2020.4.5.1)
+Collecting chardet<4,>=3.0.2
+  Downloading chardet-3.0.4-py2.py3-none-any.whl (133 kB)
+Collecting idna<3,>=2.5
+  Downloading idna-2.9-py2.py3-none-any.whl (58 kB)
+Collecting urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1
+  Downloading urllib3-1.25.8-py2.py3-none-any.whl (125 kB)
+Collecting PyJWT>=1.0.0
+  Downloading PyJWT-1.7.1-py2.py3-none-any.whl (18 kB)
+Collecting azure-mgmt-containerregistry>=2.0.0
+  Downloading azure_mgmt_containerregistry-2.8.0-py2.py3-none-any.whl (718 kB)
+Collecting SecretStorage
+  Downloading SecretStorage-3.1.2-py3-none-any.whl (14 kB)
+Collecting pathspec
+  Downloading pathspec-0.8.0-py2.py3-none-any.whl (28 kB)
+Collecting ruamel.yaml<=0.15.89,>=0.15.35
+  Downloading ruamel.yaml-0.15.89-cp37-cp37m-manylinux1_x86_64.whl (647 kB)
+Collecting jsonpickle
+  Downloading jsonpickle-1.3-py2.py3-none-any.whl (32 kB)
+Collecting contextlib2
+  Downloading contextlib2-0.6.0.post1-py2.py3-none-any.whl (9.8 kB)
+Collecting azure-mgmt-authorization>=0.40.0
+  Downloading azure_mgmt_authorization-0.60.0-py2.py3-none-any.whl (82 kB)
+Collecting jmespath
+  Downloading jmespath-0.9.5-py2.py3-none-any.whl (24 kB)
+Collecting ndg-httpsclient
+  Downloading ndg_httpsclient-0.5.1-py3-none-any.whl (34 kB)
+Collecting pyopenssl
+  Downloading pyOpenSSL-19.1.0-py2.py3-none-any.whl (53 kB)
+Collecting azure-mgmt-keyvault>=0.40.0
+  Downloading azure_mgmt_keyvault-2.2.0-py2.py3-none-any.whl (89 kB)
+Collecting azure-graphrbac>=0.40.0
+  Downloading azure_graphrbac-0.61.1-py2.py3-none-any.whl (141 kB)
+Collecting docker
+  Downloading docker-4.2.0-py2.py3-none-any.whl (143 kB)
+Collecting backports.tempfile
+  Downloading backports.tempfile-1.0-py2.py3-none-any.whl (4.4 kB)
+Collecting azureml-pipeline-core==1.0.74.*
+  Downloading azureml_pipeline_core-1.0.74-py2.py3-none-any.whl (264 kB)
+Collecting azureml-pipeline-steps==1.0.74.*
+  Downloading azureml_pipeline_steps-1.0.74-py3-none-any.whl (40 kB)
+Collecting azureml-train-core==1.0.74.*
+  Downloading azureml_train_core-1.0.74-py3-none-any.whl (7.7 MB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1-cp37-cp37m-manylinux1_x86_64.whl (27 kB)
+Collecting requests-oauthlib>=0.5.0
+  Downloading requests_oauthlib-1.3.0-py2.py3-none-any.whl (23 kB)
+Collecting isodate>=0.6.0
+  Downloading isodate-0.6.0-py2.py3-none-any.whl (45 kB)
+Collecting cffi!=1.11.3,>=1.8
+  Downloading cffi-1.14.0-cp37-cp37m-manylinux1_x86_64.whl (400 kB)
+Collecting distro>=1.2.0
+  Downloading distro-1.5.0-py2.py3-none-any.whl (18 kB)
+Collecting msal-extensions~=0.1.3
+  Downloading msal_extensions-0.1.3-py2.py3-none-any.whl (9.0 kB)
+Collecting msal<2.0.0,>=1.0.0
+  Downloading msal-1.2.0-py2.py3-none-any.whl (46 kB)
+Collecting jeepney>=0.4.2
+  Downloading jeepney-0.4.3-py3-none-any.whl (21 kB)
+Collecting pyasn1>=0.1.1
+  Downloading pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
+Collecting websocket-client>=0.32.0
+  Downloading websocket_client-0.57.0-py2.py3-none-any.whl (200 kB)
+Collecting backports.weakref
+  Downloading backports.weakref-1.0.post1-py2.py3-none-any.whl (5.2 kB)
+Collecting azureml-telemetry==1.0.74.*
+  Downloading azureml_telemetry-1.0.74-py3-none-any.whl (31 kB)
+Collecting azureml-train-restclients-hyperdrive==1.0.74.*
+  Downloading azureml_train_restclients_hyperdrive-1.0.74-py3-none-any.whl (18 kB)
+Collecting oauthlib>=3.0.0
+  Downloading oauthlib-3.1.0-py2.py3-none-any.whl (147 kB)
+Collecting pycparser
+  Downloading pycparser-2.20-py2.py3-none-any.whl (112 kB)
+Collecting portalocker~=1.0
+  Downloading portalocker-1.6.0-py2.py3-none-any.whl (14 kB)
+Collecting applicationinsights
+  Downloading applicationinsights-0.11.9-py2.py3-none-any.whl (58 kB)
+Building wheels for collected packages: liac-arff, dill, wrapt
+  Building wheel for liac-arff (setup.py): started
+  Building wheel for liac-arff (setup.py): finished with status 'done'
+  Created wheel for liac-arff: filename=liac_arff-2.4.0-py3-none-any.whl size=13333 sha256=cc10ca7724c1ffb60916a3b954154100817afe38c159c37e96371d79cef453a4
+  Stored in directory: /root/.cache/pip/wheels/db/b2/8d/8737daed1b77ee2e9e834da36b2213d6e439bf42d82ce5e911
+  Building wheel for dill (setup.py): started
+  Building wheel for dill (setup.py): finished with status 'done'
+  Created wheel for dill: filename=dill-0.3.1.1-py3-none-any.whl size=78530 sha256=4ff6b0206f6034f9e6ef66c1fe460b7ed8bcdc83737acb873d64c34e62d04c70
+  Stored in directory: /root/.cache/pip/wheels/a4/61/fd/c57e374e580aa78a45ed78d5859b3a44436af17e22ca53284f
+  Building wheel for wrapt (setup.py): started
+  Building wheel for wrapt (setup.py): finished with status 'done'
+  Created wheel for wrapt: filename=wrapt-1.11.1-cp37-cp37m-linux_x86_64.whl size=66634 sha256=84efe845f1254053748034a8d69ef609c11e580fe514dc545a685420f7238fda
+  Stored in directory: /root/.cache/pip/wheels/4e/58/9d/da8bad4545585ca52311498ff677647c95c7b690b3040171f8
+Successfully built liac-arff dill wrapt
+[91mERROR: azureml-sdk 1.0.74 has requirement azureml-dataprep[fuse]<1.2.0a,>=1.1.29a, but you'll have azureml-dataprep 1.4.3 which is incompatible.
+[0mInstalling collected packages: liac-arff, numpy, python-dateutil, pytz, pandas, dill, chardet, idna, urllib3, requests, PyJWT, pycparser, cffi, cryptography, adal, azureml-model-management-sdk, azure-common, oauthlib, requests-oauthlib, isodate, msrest, msrestazure, azure-mgmt-containerregistry, azure-mgmt-resource, azure-mgmt-storage, jeepney, SecretStorage, pathspec, ruamel.yaml, jsonpickle, contextlib2, azure-mgmt-authorization, jmespath, pyasn1, pyopenssl, ndg-httpsclient, azure-mgmt-keyvault, azure-graphrbac, websocket-client, docker, backports.weakref, backports.tempfile, azureml-core, azureml-pipeline-core, applicationinsights, azureml-telemetry, azureml-train-restclients-hyperdrive, azureml-train-core, azureml-pipeline-steps, azureml-pipeline, azureml-train, distro, dotnetcore2, azureml-dataprep-native, cloudpickle, portalocker, msal, msal-extensions, azure-core, azure-identity, azureml-dataprep, azureml-sdk, scipy, joblib, scikit-learn, gunicorn, Werkzeug, itsdangerous, click, MarkupSafe, Jinja2, flask, wrapt, inference-schema, azure-mgmt-compute, azure-keyvault-secrets, azure-storage-blob
+  Attempting uninstall: numpy
+    Found existing installation: numpy 1.18.1
+    Uninstalling numpy-1.18.1:
+      Successfully uninstalled numpy-1.18.1
+  Attempting uninstall: scipy
+    Found existing installation: scipy 1.4.1
+    Uninstalling scipy-1.4.1:
+      Successfully uninstalled scipy-1.4.1
+  Attempting uninstall: joblib
+    Found existing installation: joblib 0.14.1
+    Uninstalling joblib-0.14.1:
+      Successfully uninstalled joblib-0.14.1
+  Attempting uninstall: scikit-learn
+    Found existing installation: scikit-learn 0.22.1
+    Uninstalling scikit-learn-0.22.1:
+      Successfully uninstalled scikit-learn-0.22.1
+Successfully installed Jinja2-2.11.1 MarkupSafe-1.1.1 PyJWT-1.7.1 SecretStorage-3.1.2 Werkzeug-1.0.1 adal-1.2.2 applicationinsights-0.11.9 azure-common-1.1.25 azure-core-1.4.0 azure-graphrbac-0.61.1 azure-identity-1.2.0 azure-keyvault-secrets-4.1.0 azure-mgmt-authorization-0.60.0 azure-mgmt-compute-12.0.0 azure-mgmt-containerregistry-2.8.0 azure-mgmt-keyvault-2.2.0 azure-mgmt-resource-9.0.0 azure-mgmt-storage-9.0.0 azure-storage-blob-12.3.0 azureml-core-1.0.74 azureml-dataprep-1.4.3 azureml-dataprep-native-14.1.0 azureml-model-management-sdk-1.0.1b6.post1 azureml-pipeline-1.0.74 azureml-pipeline-core-1.0.74 azureml-pipeline-steps-1.0.74 azureml-sdk-1.0.74 azureml-telemetry-1.0.74 azureml-train-1.0.74 azureml-train-core-1.0.74 azureml-train-restclients-hyperdrive-1.0.74 backports.tempfile-1.0 backports.weakref-1.0.post1 cffi-1.14.0 chardet-3.0.4 click-7.1.1 cloudpickle-1.3.0 contextlib2-0.6.0.post1 cryptography-2.9 dill-0.3.1.1 distro-1.5.0 docker-4.2.0 dotnetcore2-2.1.13 flask-1.1.1 gunicorn-19.9.0 idna-2.9 inference-schema-1.0.2 isodate-0.6.0 itsdangerous-1.1.0 jeepney-0.4.3 jmespath-0.9.5 joblib-0.14.0 jsonpickle-1.3 liac-arff-2.4.0 msal-1.2.0 msal-extensions-0.1.3 msrest-0.6.13 msrestazure-0.6.3 ndg-httpsclient-0.5.1 numpy-1.17.3 oauthlib-3.1.0 pandas-0.25.3 pathspec-0.8.0 portalocker-1.6.0 pyasn1-0.4.8 pycparser-2.20 pyopenssl-19.1.0 python-dateutil-2.8.1 pytz-2019.3 requests-2.23.0 requests-oauthlib-1.3.0 ruamel.yaml-0.15.89 scikit-learn-0.22 scipy-1.3.1 urllib3-1.25.8 websocket-client-0.57.0 wrapt-1.11.1
+[91m
+[0m#
+# To activate this environment, use:
+# > source activate /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636
+#
+# To deactivate an active environment, use:
+# > source deactivate
+#
+
+
+Removing intermediate container 53e1cdde2f4c
+ ---> c79eb01583ec
+Step 9/15 : ENV PATH /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636/bin:$PATH
+ ---> Running in 1dbc447811bd
+Removing intermediate container 1dbc447811bd
+ ---> bb90c1bbdfb9
+Step 10/15 : ENV AZUREML_CONDA_ENVIRONMENT_PATH /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636
+ ---> Running in 8d3ec9676e00
+Removing intermediate container 8d3ec9676e00
+ ---> cc9d22cb46f7
+Step 11/15 : ENV LD_LIBRARY_PATH /azureml-envs/azureml_6180ba25e5e98f0633e353ddd57f1636/lib:$LD_LIBRARY_PATH
+ ---> Running in 8cdda73f62fe
+Removing intermediate container 8cdda73f62fe
+ ---> 6056c1fbeccd
+Step 12/15 : COPY azureml-environment-setup/spark_cache.py azureml-environment-setup/log4j.properties /azureml-environment-setup/
+ ---> d7d55c594d30
+Step 13/15 : RUN if [ $SPARK_HOME ]; then /bin/bash -c '$SPARK_HOME/bin/spark-submit "--repositories" "[]" /azureml-environment-setup/spark_cache.py'; fi
+ ---> Running in e376e76451f6
+Removing intermediate container e376e76451f6
+ ---> 3cb6f9863efb
+Step 14/15 : ENV AZUREML_ENVIRONMENT_IMAGE True
+ ---> Running in f739e05d3827
+Removing intermediate container f739e05d3827
+ ---> 92eaeedf11a5
+Step 15/15 : CMD ["bash"]
+ ---> Running in f816eba2d0aa
+Removing intermediate container f816eba2d0aa
+ ---> 2a55d919cc46
+Successfully built 2a55d919cc46
+Successfully tagged mlopsopenhac4b2787af.azurecr.io/azureml/azureml_7d604b0b3ce007eeb36d5c04f5ebb44a:latest
+2020/04/11 12:23:11 Successfully executed container: acb_step_0
+2020/04/11 12:23:11 Executing step ID: acb_step_1. Timeout(sec): 5400, Working directory: '', Network: 'acb_default_network'
+2020/04/11 12:23:11 Pushing image: mlopsopenhac4b2787af.azurecr.io/azureml/azureml_7d604b0b3ce007eeb36d5c04f5ebb44a:latest, attempt 1
+The push refers to repository [mlopsopenhac4b2787af.azurecr.io/azureml/azureml_7d604b0b3ce007eeb36d5c04f5ebb44a]
+c0d746eab71d: Preparing
+616faa8da7b7: Preparing
+8c9141475e29: Preparing
+c761e9d93c6f: Preparing
+2595d71311fa: Preparing
+82c6e871480e: Preparing
+e1171d4d60ca: Preparing
+6ef1a8ae63b7: Preparing
+85389f9ead9e: Preparing
+f2608f66a0e3: Preparing
+0e259b09e5f4: Preparing
+340dc32eb998: Preparing
+df18b66efaa6: Preparing
+ccdb13a20bf2: Preparing
+9513cdf4e497: Preparing
+7f083f9454c0: Preparing
+29f36b5893dc: Preparing
+f2608f66a0e3: Waiting
+0e259b09e5f4: Waiting
+340dc32eb998: Waiting
+df18b66efaa6: Waiting
+ccdb13a20bf2: Waiting
+9513cdf4e497: Waiting
+7f083f9454c0: Waiting
+29f36b5893dc: Waiting
+82c6e871480e: Waiting
+e1171d4d60ca: Waiting
+6ef1a8ae63b7: Waiting
+85389f9ead9e: Waiting
+c761e9d93c6f: Pushed
+2595d71311fa: Pushed
+8c9141475e29: Pushed
+c0d746eab71d: Pushed
+82c6e871480e: Pushed
+e1171d4d60ca: Pushed
+6ef1a8ae63b7: Pushed
+340dc32eb998: Pushed
+85389f9ead9e: Pushed
+ccdb13a20bf2: Pushed
+0e259b09e5f4: Pushed
+9513cdf4e497: Pushed
+7f083f9454c0: Pushed
+f2608f66a0e3: Pushed
+df18b66efaa6: Pushed
+29f36b5893dc: Pushed
+
+616faa8da7b7: Pushed
+latest: digest: sha256:3b401121c57a5d8c7d762b64a446ec4944202b01429788e24cd46c8c1f226e96 size: 3883
+2020/04/11 12:25:12 Successfully pushed image: mlopsopenhac4b2787af.azurecr.io/azureml/azureml_7d604b0b3ce007eeb36d5c04f5ebb44a:latest
+2020/04/11 12:25:12 Step ID: acb_step_0 marked as successful (elapsed time in seconds: 160.945701)
+2020/04/11 12:25:12 Populating digests for step ID: acb_step_0...
+2020/04/11 12:25:13 Successfully populated digests for step ID: acb_step_0
+2020/04/11 12:25:13 Step ID: acb_step_1 marked as successful (elapsed time in seconds: 121.366389)
+2020/04/11 12:25:13 The following dependencies were found:
+2020/04/11 12:25:13 
+- image:
+    registry: mlopsopenhac4b2787af.azurecr.io
+    repository: azureml/azureml_7d604b0b3ce007eeb36d5c04f5ebb44a
+    tag: latest
+    digest: sha256:3b401121c57a5d8c7d762b64a446ec4944202b01429788e24cd46c8c1f226e96
+  runtime-dependency:
+    registry: mcr.microsoft.com
+    repository: azureml/base
+    tag: intelmpi2018.3-ubuntu16.04
+    digest: sha256:a1b514f3ba884b9a7695cbba5638933ddaf222e8ce3e8c81e8cdf861679abb05
+  git: {}
+
+
+Run ID: cb7 was successful after 4m49s

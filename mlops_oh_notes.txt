@@ -9,3 +9,32 @@ replaced with:
 - azure-mgmt-resource
 - azure-keyvault-secrets
 - azure-storage-blob (already included)
+
+Build still includes "azure" meta-package even after it was swapped out from all .yml files.
+
+Trying modification to safedriver-variables-template:
+  # Flag to allow rebuilding the AML Environment after it was built for the first time. This enables dependency updates from conda_dependencies.yaml.
+   - name: AML_REBUILD_ENVIRONMENT
+    value: "true"
+
+Collecting azureml-model-management-sdk==1.0.1b6.post1
+Collecting azureml-sdk==1.0.74
+Collecting scipy==1.3.1
+Collecting scikit-learn==0.22
+Collecting pandas==0.25.3
+Collecting numpy==1.17.3
+Collecting joblib==0.14.0
+Collecting gunicorn==19.9.0
+Collecting flask==1.1.1
+Collecting inference-schema[numpy-support]
+Collecting azure
+
+     command: /azureml-envs/azureml_314fca60f1726b525836e454af8c229a/bin/python -c 'import sys, setuptools, tokenize; sys.argv[0] = '"'"'/tmp/pip-install-qwvztkeg/azure/setup.py'"'"'; __file__='"'"'/tmp/pip-install-qwvztkeg/azure/setup.py'"'"';f=getattr(tokenize, '"'"'open'"'"', open)(__file__);code=f.read().replace('"'"'\r\n'"'"', '"'"'\n'"'"');f.close();exec(compile(code, __file__, '"'"'exec'"'"'))' egg_info --egg-base /tmp/pip-install-qwvztkeg/azure/pip-egg-info
+         cwd: /tmp/pip-install-qwvztkeg/azure/
+
+
+Deleted train_cluster and reran DevOps pipeline.  Run 9_10.  This time "azure" package is gone and it seems we got past the env setup stage of the Train Model step.
+Cancelled the run after waiting 20+ minutes.  Log indicates success with one error in the middle:
+91mERROR: azureml-sdk 1.0.74 has requirement azureml-dataprep[fuse]<1.2.0a,>=1.1.29a, but you'll have azureml-dataprep 1.4.3 which is incompatible.
+
+Reran pipeline. Run 12_13....
