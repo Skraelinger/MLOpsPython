@@ -45,7 +45,7 @@ def call_web_app(url, headers):
     headers['traceparent'] = "00-{0}-{1}-00".format(
         secrets.token_hex(16), secrets.token_hex(8))
 
-    retries = 600
+    retries = 50
     for i in range(retries):
         try:
             response = requests.post(
@@ -79,7 +79,10 @@ def main():
     )
     args = parser.parse_args()
 
+    # Trace environment
     e = Env()
+    print(e)
+
     if args.type == "Webapp":
         output = call_web_app(args.service, {})
     else:
