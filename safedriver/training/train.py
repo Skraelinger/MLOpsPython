@@ -24,7 +24,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THE SOFTWARE CODE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 """
 
-import os
 import pandas as pd
 import numpy as np
 from sklearn import metrics
@@ -37,13 +36,13 @@ def split_data(data_df):
 
     features = data_df.drop(['target', 'id'], axis=1)
     labels = np.array(data_df['target'])
-    (features_train, features_valid, labels_train, labels_valid) = train_test_split(features,
-                                                                                    labels,
-                                                                                    test_size=0.2,
-                                                                                    random_state=0)
+    (features_train, features_valid, labels_train, labels_valid) = train_test_split(features,  # noqa E501
+                                                                                    labels,  # noqa E501
+                                                                                    test_size=0.2,  # noqa E501
+                                                                                    random_state=0)  # noqa E501
 
     train_data = lightgbm.Dataset(features_train, label=labels_train)
-    valid_data = lightgbm.Dataset(features_valid, label=labels_valid, free_raw_data=False)
+    valid_data = lightgbm.Dataset(features_valid, label=labels_valid, free_raw_data=False)  # noqa E501
 
     return (train_data, valid_data)
 
