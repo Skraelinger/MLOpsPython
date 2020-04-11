@@ -48,6 +48,10 @@ class Env(Singleton):
         self._aml_env_name = os.environ.get("AML_ENV_NAME")
         self._rebuild_env = os.environ.get("AML_REBUILD_ENVIRONMENT",
                                            "false").lower().strip() == "true"
+        self._vnet_resourcegroup_name = os.environ.get("VNET_RESOURCEGROUP_NAME")
+        self._vnet_name = os.environ.get("VNET_NAME")
+        self._subnet_name = os.environ.get("SUBNET_NAME")
+
 
     @property
     def workspace_name(self):
@@ -172,3 +176,16 @@ class Env(Singleton):
     @property
     def rebuild_env(self):
         return self._rebuild_env
+
+    @property
+    def vnet_resourcegroup_name(self):
+        return self._vnet_resourcegroup_name
+
+    @property
+    def vnet_name(self):
+        return self._vnet_name
+
+    @property
+    def subnet_name(self):
+        return self._subnet_name
+
