@@ -55,18 +55,12 @@ output_sample = numpy.array([
     3693.645386402646])
 
 
-# Inference_schema generates a schema for your web service
-# It then creates an OpenAPI (Swagger) specification for the web service
-# at http://<scoring_base_url>/swagger.json
 @input_schema('data', NumpyParameterType(input_sample))
 @output_schema(NumpyParameterType(output_sample))
-
-
 def run(data, request_headers):
-#def run(raw_data, request_headers):
-    #data = json.loads(raw_data)["data"]
-    #data = np.array(data)
-    
+    # def run(raw_data, request_headers):
+    # data = json.loads(raw_data)["data"]
+    # data = np.array(data)
     result = model.predict(data)
 
     # Demonstrate how we can log custom data into the Application Insights
