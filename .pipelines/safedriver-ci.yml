@@ -5,8 +5,7 @@ resources:
   - container: mlops
     image: mcr.microsoft.com/mlops/python:openhack
 
-# pr: none
-pr:
+pr: none
 trigger:
   branches:
     include:
