@@ -36,6 +36,9 @@ dependencies:
       - gunicorn==19.9.0
       - flask==1.1.1
       - inference-schema[numpy-support]
-      - azure
+      - azure-mgmt-compute
+      - azure-mgmt-storage
+      - azure-mgmt-resource
+      - azure-keyvault-secrets
       - azure-storage-blob
       - azureml-dataprep
