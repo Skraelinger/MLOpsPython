@@ -23,11 +23,11 @@ def get_compute(
                 vm_priority=e.vm_priority,
                 min_nodes=e.min_nodes,
                 max_nodes=e.max_nodes,
-                idle_seconds_before_scaledown="300"
-                #    #Uncomment the below lines for VNet support
-                #    vnet_resourcegroup_name=vnet_resourcegroup_name,
-                #    vnet_name=vnet_name,
-                #    subnet_name=subnet_name
+                idle_seconds_before_scaledown="300",
+                #Uncomment the below lines for VNet support
+                vnet_resourcegroup_name=e.vnet_resourcegroup_name,
+                vnet_name=e.vnet_name,
+                subnet_name=e.subnet_name
             )
             compute_target = ComputeTarget.create(workspace, compute_name,
                                                   compute_config)
